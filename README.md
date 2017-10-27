@@ -1,8 +1,16 @@
-# .
+# sketch-svgsymbols
 
 _This plugin was created using `skpm`. For a detailed explanation on how things work, checkout the [skpm Readme](https://github.com/skpm/skpm/blob/master/README.md)._
 
-## CLI Commands
+## TODO
+
+- centering textlayers
+- decentralise/handle nested symbols
+- handle image fields
+- include hidden layers in SVG
+- maintain constraints
+
+## Dev
 
 ``` bash
 # build with hot reload
