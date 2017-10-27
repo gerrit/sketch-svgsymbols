@@ -18,5 +18,8 @@
   "devDependencies": {
     "@skpm/builder": "^0.1.4",
     "skpm": "^1.0.1"
+  },
+  "dependencies": {
+    "xml2js": "^0.4.19"
   }
 }
