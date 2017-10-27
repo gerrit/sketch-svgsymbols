@@ -20,6 +20,7 @@
     "skpm": "^1.0.1"
   },
   "dependencies": {
-    "xml2js": "^0.4.19"
+    "xml2js": "^0.4.19",
+    "xml2js-xpath": "^0.8.0"
   }
 }

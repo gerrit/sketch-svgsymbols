@@ -1,4 +1,5 @@
 import XML2JS from 'xml2js'
+import XPath from 'xml2js-xpath'
 
 function findDocument() {
   const windows = NSApp.windows()
@@ -9,6 +10,17 @@ function findDocument() {
   }
 }
 
+function findTextLayerIds(parsedSVG) {
+  var matches = XPath.find(parsedSVG, "//text")
+  var ids = [];
+  for(let i = 0; i < matches.length; i++) {
+    var match = matches[i]
+    console.log(JSON.stringify(match))
+    ids << match['$']['id']
+  }
+  return ids;
+}
+
 function filterSVGFile(path) {
   var svgString = "" + NSString.stringWithContentsOfFile_encoding_error(path, NSUTF8StringEncoding, nil)
   log(svgString)
@@ -17,6 +29,7 @@ function filterSVGFile(path) {
   XML2JS.parseString(svgString, function(err, parsed) {
     console.log(JSON.stringify(parsed))
     parsed['svg']['desc'] = 'Created with sketch-svgsymbols'
+    var ids = findTextLayerIds(parsed)
     var transformedSvgString = builder.buildObject(parsed)
     console.log(transformedSvgString)
     NSString.stringWithString(transformedSvgString).writeToFile_atomically_encoding_error(path, true, NSUTF8StringEncoding, nil)
