@@ -93,8 +93,10 @@ export function svgSymbolsHandler(context, params) {
             log(elem)
             // HACK: assuming one tspan only, which is true for symbols w overrides
             // but not necessarily for other scenario
-            elem['tspan'][0]['$']['x'] = '50%'
+            // 50% doesnt work, leaving here for reference
+            // elem['tspan'][0]['$']['x'] = '50%'
             elem['tspan'][0]['$']['text-anchor'] = 'middle'
+            elem['tspan'][0]['$']['x'] = layer.rect().size.width/2
           }
         }
         return parsed
