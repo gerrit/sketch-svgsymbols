@@ -1,12 +1,10 @@
 import XML2JS from 'xml2js'
 
-function showMessage(str) {
-  // HACK because `context` in an action handler doesn't have a `document`
+function findDocument() {
   const windows = NSApp.windows()
   for(let i = 0; i< windows.length; i++) {
     if (windows[i].isKindOfClass(MSDocumentWindow)) {
-      const doc = windows[i].document()
-      doc.showMessage(str)
+      return windows[i].document();
     }
   }
 }
@@ -26,6 +24,8 @@ function filterSVGFile(path) {
 }
 
 export function svgSymbolsHandler(context, params) {
+  // HACK because `context` in an action handler doesn't have a `document`
+  var doc = findDocument();
   var exports = context.actionContext.exports
   var filesToCompress = []
   for (var i = 0; i < exports.count(); i++) {
@@ -36,5 +36,5 @@ export function svgSymbolsHandler(context, params) {
       filterSVGFile(currentExport.path)
     }
   }
-  showMessage("It's alive 🙌")
+  doc.showMessage("It's alive 🙌")
 }
