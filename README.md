@@ -4,7 +4,6 @@ _This plugin was created using `skpm`. For a detailed explanation on how things 
 
 ## TODO
 
-- centering textlayers
 - decentralise/handle nested symbols
 - handle image fields
 - include hidden layers in SVG

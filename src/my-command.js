@@ -10,16 +10,8 @@ function findDocument() {
   }
 }
 
-function findTextLayerIds(parsedSVG) {
-  var matches = XPath.find(parsedSVG, "//text")
-  var ids = []
-  for(let i = 0; i < matches.length; i++) {
-    var match = matches[i]
-    console.log('match!')
-    console.log(JSON.stringify(match))
-    ids.push(match['$']['id'])
-  }
-  return ids
+function findTextLayers(parsedSVG) {
+  return XPath.find(parsedSVG, "//text")
 }
 
 // takes callback(parsedSVG)->parsedSVG
@@ -46,6 +38,16 @@ function findArtboardForRect(document, rect) {
       return currentArtboard
     }
   }
+}
+
+function isCentered(textLayer) {
+  log('textLayer')
+  log(textLayer)
+  const leftTextAlignment = 0 //can be (null) too
+  const centeredTextAlignment = 2
+  const rightTextAlignment = 1
+  const justifyTextAlignment = 3
+  return textLayer.textAlignment() == centeredTextAlignment
 }
 
 export function svgSymbolsHandler(context, params) {
@@ -76,20 +78,26 @@ export function svgSymbolsHandler(context, params) {
     var artboard = findArtboardForRect(doc, currentExport.request.rect())
     if (currentExport.request.format() == 'svg') {
       filterSVGExport(currentExport.path, function(parsed) {
-        var ids = findTextLayerIds(parsed)
-        log('ids')
-        log(ids)
+        var textElements = findTextLayers(parsed)
+        log('TL')
+        log(textElements)
         // TODO: deal with IDs with spaces in Sketch that are turned into 
         // dashes in SVG (need to do fuzzy matching)
-        for (var i = 0; i < ids.length; i++) {
+        for (var i = 0; i < textElements.length; i++) {
+          var elem = textElements[i]
           // TODO: deal with two layers that are children with the same name/id
-          var layer = artboard.layerWithID_(ids[i])
+          var layer = artboard.layerWithID_(elem['$']['id'])
           log('layer')
           log(layer)
-          if(layer) {
-            // TODO: process
+          if(layer && isCentered(layer)) {
+            log(elem)
+            // HACK: assuming one tspan only, which is true for symbols w overrides
+            // but not necessarily for other scenario
+            elem['tspan'][0]['$']['x'] = '50%'
+            elem['tspan'][0]['$']['text-anchor'] = 'middle'
           }
         }
+        return parsed
       })
     }
   }
