@@ -26,7 +26,8 @@ function filterSVGExport(path, callback) {
     var transformed = callback(parsed)
     var transformedSvgString = builder.buildObject(transformed)
     console.log(transformedSvgString)
-    NSString.stringWithString(transformedSvgString).writeToFile_atomically_encoding_error(path, true, NSUTF8StringEncoding, nil)
+    var newPath = path.replace(/.svg$/, '.svgsymbol')
+    NSString.stringWithString(transformedSvgString).writeToFile_atomically_encoding_error(newPath, true, NSUTF8StringEncoding, nil)
   })
 }
 
@@ -103,5 +104,5 @@ export function svgSymbolsHandler(context, params) {
       })
     }
   }
-  doc.showMessage("It's alive 🙌")
+  doc.showMessage("SVGSymbols exported 🙌")
 }
