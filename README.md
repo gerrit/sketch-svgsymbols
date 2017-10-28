@@ -1,11 +1,16 @@
 # sketch-svgsymbols
 
-_This plugin was created using `skpm`. For a detailed explanation on how things work, checkout the [skpm Readme](https://github.com/skpm/skpm/blob/master/README.md)._
+SVGSymbols aims to Sketch symbols re-usable across other platforms. It exports`.svgsymbol` files that contain additional metadata about the structure and semantics of the symbol that keeps the overrides defined in sketch (text fields and image placeholders) editable elsewhere, e.g. in Framer.
 
 ## TODO
 
+- handle image override fields 
+- preserve exact layer names in attribute, use those as override names
+- handle text transform (hard, b/c SVG doesn't support it as property, would need to write code in importer to read out special metadata and perform transformation)
+- framer side: import svgsymbols automatically? might need JSON index of folder…
+- Sketch: kick in only for actual symbol masters? (& instances?)
 - decentralise/handle nested symbols
-- handle image fields
+- include locked layers, but dont make them editable?
 - include hidden layers in SVG
 - maintain constraints
 
