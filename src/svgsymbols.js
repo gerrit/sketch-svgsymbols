@@ -51,6 +51,15 @@ function isCentered(textLayer) {
   return textLayer.textAlignment() == centeredTextAlignment
 }
 
+function fixupTextCentering(elem, layer) {
+  // HACK: assuming one tspan only, which is true for symbols w overrides
+  // but not necessarily for other scenario
+  elem['tspan'][0]['$']['text-anchor'] = 'middle'
+  // 50% doesnt work, leaving here for reference
+  // elem['tspan'][0]['$']['x'] = '50%'
+  elem['tspan'][0]['$']['x'] = layer.rect().size.width/2
+}
+
 export function svgSymbolsHandler(context, params) {
   // HACK because `context` in an action handler doesn't have a `document`
   var doc = findDocument();
@@ -92,12 +101,7 @@ export function svgSymbolsHandler(context, params) {
           log(layer)
           if(layer && isCentered(layer)) {
             log(elem)
-            // HACK: assuming one tspan only, which is true for symbols w overrides
-            // but not necessarily for other scenario
-            // 50% doesnt work, leaving here for reference
-            // elem['tspan'][0]['$']['x'] = '50%'
-            elem['tspan'][0]['$']['text-anchor'] = 'middle'
-            elem['tspan'][0]['$']['x'] = layer.rect().size.width/2
+            fixupTextCentering(elem, layer)
           }
         }
         return parsed
