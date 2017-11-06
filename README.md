@@ -1,6 +1,14 @@
-# sketch-svgsymbols
+# Sketch SVGSymbols
 
-SVGSymbols aims to Sketch symbols re-usable across other platforms. It exports`.svgsymbol` files that contain additional metadata about the structure and semantics of the symbol that keeps the overrides defined in sketch (text fields and image placeholders) editable elsewhere, e.g. in Framer using [framer-svgsymbols](https://github.com/fx-lange/framer-svgsymbols).
+SVGSymbols aims to Sketch symbols re-usable across other platforms. It exports`.svgsymbol` files that contain additional metadata about the structure and semantics of the symbol that keeps the overrides defined in sketch (text fields and image placeholders) editable elsewhere, e.g. [in Framer (using framer-svgsymbols)][2] or in your styleguide.
+
+
+## Implementations
+- [sketch-svgsymbols][1] (this repo)
+- [framer-svgsymbols][2]
+
+[1]: https://github.com/gerrit/sketch-svgsymbols
+[2]: https://github.com/fx-lange/framer-svgsymbols
 
 ## TODO
 
