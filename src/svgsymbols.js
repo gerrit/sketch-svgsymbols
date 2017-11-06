@@ -1,6 +1,8 @@
 import XML2JS from 'xml2js'
 import XPath from 'xml2js-xpath'
 
+var xmlNamespace = 'http://xmlns.gerritkaiser.de/svgsymbols'
+
 function findDocument() {
   const windows = NSApp.windows()
   for(let i = 0; i< windows.length; i++) {
@@ -22,6 +24,7 @@ function filterSVGExport(path, callback) {
   var builder = new XML2JS.Builder()
   XML2JS.parseString(svgString, function(err, parsed) {
     console.log(JSON.stringify(parsed))
+    parsed['svg']['$']['xmlns:svgsymbols'] = xmlNamespace
     parsed['svg']['desc'] = 'Created with sketch-svgsymbols'
     var transformed = callback(parsed)
     var transformedSvgString = builder.buildObject(transformed)
@@ -60,6 +63,10 @@ function fixupTextCentering(elem, layer) {
   elem['tspan'][0]['$']['x'] = layer.rect().size.width/2
 }
 
+function setOverrideName(elem, layer) {
+  elem['$']['svgsymbols:name'] = layer.name()
+}
+
 export function svgSymbolsHandler(context, params) {
   // HACK because `context` in an action handler doesn't have a `document`
   var doc = findDocument()
@@ -89,6 +96,7 @@ export function svgSymbolsHandler(context, params) {
             log(elem)
             break;
           }
+          setOverrideName(elem, layer)
           if(isCentered(layer)) {
             fixupTextCentering(elem, layer)
           }
