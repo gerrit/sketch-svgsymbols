@@ -5,7 +5,7 @@ function findDocument() {
   const windows = NSApp.windows()
   for(let i = 0; i< windows.length; i++) {
     if (windows[i].isKindOfClass(MSDocumentWindow)) {
-      return windows[i].document();
+      return windows[i].document()
     }
   }
 }
@@ -62,22 +62,11 @@ function fixupTextCentering(elem, layer) {
 
 export function svgSymbolsHandler(context, params) {
   // HACK because `context` in an action handler doesn't have a `document`
-  var doc = findDocument();
+  var doc = findDocument()
   var exports = context.actionContext.exports
-  log('ctx')
-  log(context)
-  log('action')
-  log(context.actionContext)
-  log('exp')
-  log(exports)
   var filesToCompress = []
   for (var i = 0; i < exports.count(); i++) {
     var currentExport = exports.objectAtIndex(i)
-    log('export')
-    log(currentExport)
-    log(currentExport.request)
-    log('layer ids')
-    
     // HACK: somewhat surprisingly, MSExportRequests don't have a reference to
     // the artboard being exported.
     // Walked through this w/ Pieter Omvlee & there are  historical reasons for
@@ -89,18 +78,18 @@ export function svgSymbolsHandler(context, params) {
     if (currentExport.request.format() == 'svg') {
       filterSVGExport(currentExport.path, function(parsed) {
         var textElements = findTextLayers(parsed)
-        log('TL')
-        log(textElements)
         // TODO: deal with IDs with spaces in Sketch that are turned into 
         // dashes in SVG (need to do fuzzy matching)
         for (var i = 0; i < textElements.length; i++) {
           var elem = textElements[i]
           // TODO: deal with two layers that are children with the same name/id
           var layer = artboard.layerWithID_(elem['$']['id'])
-          log('layer')
-          log(layer)
-          if(layer && isCentered(layer)) {
+          if(!layer) {
+            log('Warning: No corresponding Sketch Layer found for element: ')
             log(elem)
+            break;
+          }
+          if(isCentered(layer)) {
             fixupTextCentering(elem, layer)
           }
         }
