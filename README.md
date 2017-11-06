@@ -12,14 +12,13 @@ SVGSymbols aims to Sketch symbols re-usable across other platforms. It exports`.
 
 ## TODO
 
-- handle image override fields 
-- preserve exact layer names in attribute, use those as override names
+- preserve exact layer names in `svgsymbols:name` attribute for overrides, use those as override names
+- handle multiple tspans in multiline text fields
 - handle text transform (hard, b/c SVG doesn't support it as property, would need to write code in importer to read out special metadata and perform transformation)
-- framer side: import svgsymbols automatically? might need JSON index of folder…
 - Sketch: kick in only for actual symbol masters? (& instances?)
-- decentralise/handle nested symbols
 - include locked layers, but dont make them editable?
 - include hidden layers in SVG
+- decentralise/handle nested symbols
 - maintain constraints
 
 ## Dev
