@@ -3,9 +3,9 @@
   "bundleVersion": 1,
   "commands": [
     {
-      "identifier": "svgo",
-      "script": "my-command.js",
-      "name": "About SVGO Compressor",
+      "identifier": "svgsymbols",
+      "script": "svgsymbols.js",
+      "name": "SVG Symbols",
       "handlers": {
         "run": "svgSymbolsHandler",
         "actions": {
@@ -14,11 +14,5 @@
         }
       }
     }
-  ],
-  "menu": {
-    "title": "sketch-svgsymbols",
-    "items": [
-      "my-command-identifier"
-    ]
-  }
+  ]
 }
